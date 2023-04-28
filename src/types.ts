@@ -7,3 +7,7 @@ export interface ItemDbObject extends RowDataPacket {
   price: number;
   quantity: number;
 }
+
+export interface Count extends RowDataPacket {
+  count: number;
+}
