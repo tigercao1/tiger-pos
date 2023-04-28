@@ -30,4 +30,6 @@ export class StoreDataSource {
       message: 'New item added!',
     };
   }
+
+  // TODO - delete an item
 }

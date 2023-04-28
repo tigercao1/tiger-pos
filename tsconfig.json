@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
-    "rootDirs": ["src"],
-    "outDir": "dist",
+    "rootDirs": ["./src", "./graphql"],
     "lib": ["es2020"],
     "target": "es2020",
     "module": "esnext",

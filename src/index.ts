@@ -1,14 +1,16 @@
 import { ApolloServer } from '@apollo/server';
 import { startStandaloneServer } from '@apollo/server/standalone';
-import { readFileSync } from 'fs';
 import { StoreDataSource } from './datasources.js';
 import resolvers from './resolvers/index.js';
 import { initializeDB } from './connection.js';
+import { readFileSync } from 'fs';
 
 // A schema is a collection of type definitions (hence "typeDefs")
 // that together define the "shape" of queries that are executed against
 // your data.
-const typeDefs = readFileSync('../schema.graphql', { encoding: 'utf-8' });
+const typeDefs = readFileSync('./graphql/schema.graphql', {
+  encoding: 'utf-8',
+});
 
 export interface StoreContext {
   dataSources: {
