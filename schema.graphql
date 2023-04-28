@@ -1,0 +1,21 @@
+type Query {
+  items: [Item]
+}
+
+type Item {
+  id: Int
+  name: String!
+  price: Float!
+  quantity: Int!
+}
+
+type AddItemMutationResponse {
+  code: String!
+  success: Boolean!
+  message: String!
+  item: Item
+}
+
+type Mutation {
+  addItem(name: String, price: Float, quantity: Int): AddItemMutationResponse
+}
