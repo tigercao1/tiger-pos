@@ -46,6 +46,7 @@ export type Mutation = {
 
 
 export type MutationAddItemArgs = {
+  barcode?: InputMaybe<Scalars['Int']>;
   name?: InputMaybe<Scalars['String']>;
   price?: InputMaybe<Scalars['Float']>;
   quantity?: InputMaybe<Scalars['Int']>;
@@ -58,7 +59,13 @@ export type MutationDeleteItemByBarcodeArgs = {
 
 export type Query = {
   __typename?: 'Query';
+  item?: Maybe<Item>;
   items?: Maybe<Array<Maybe<Item>>>;
+};
+
+
+export type QueryItemArgs = {
+  barcode?: InputMaybe<Scalars['Int']>;
 };
 
 export type WithIndex<TObject> = TObject & Record<string, any>;
@@ -186,6 +193,7 @@ export type MutationResolvers<ContextType = StoreContext, ParentType extends Res
 }>;
 
 export type QueryResolvers<ContextType = StoreContext, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
+  item?: Resolver<Maybe<ResolversTypes['Item']>, ParentType, ContextType, Partial<QueryItemArgs>>;
   items?: Resolver<Maybe<Array<Maybe<ResolversTypes['Item']>>>, ParentType, ContextType>;
 }>;
 

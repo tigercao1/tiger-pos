@@ -5,6 +5,9 @@ const queries: QueryResolvers = {
     items: async (_, __, { dataSources }) => {
       return dataSources.storeAPI.getItems();
     },
+    item: async (_, { barcode }, { dataSources }) => {
+      return dataSources.storeAPI.getItemByBarcode(barcode);
+    },
   },
 };
 
