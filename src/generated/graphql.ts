@@ -22,8 +22,16 @@ export type AddItemMutationResponse = {
   success: Scalars['Boolean'];
 };
 
+export type DeleteItemMutationResponse = {
+  __typename?: 'DeleteItemMutationResponse';
+  code: Scalars['String'];
+  item?: Maybe<Item>;
+  success: Scalars['Boolean'];
+};
+
 export type Item = {
   __typename?: 'Item';
+  barcode: Scalars['Float'];
   id?: Maybe<Scalars['Int']>;
   name: Scalars['String'];
   price: Scalars['Float'];
@@ -33,6 +41,7 @@ export type Item = {
 export type Mutation = {
   __typename?: 'Mutation';
   addItem?: Maybe<AddItemMutationResponse>;
+  deleteItemByBarcode?: Maybe<DeleteItemMutationResponse>;
 };
 
 
@@ -40,6 +49,11 @@ export type MutationAddItemArgs = {
   name?: InputMaybe<Scalars['String']>;
   price?: InputMaybe<Scalars['Float']>;
   quantity?: InputMaybe<Scalars['Int']>;
+};
+
+
+export type MutationDeleteItemByBarcodeArgs = {
+  barcode?: InputMaybe<Scalars['Float']>;
 };
 
 export type Query = {
@@ -120,6 +134,7 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 export type ResolversTypes = ResolversObject<{
   AddItemMutationResponse: ResolverTypeWrapper<AddItemMutationResponse>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
+  DeleteItemMutationResponse: ResolverTypeWrapper<DeleteItemMutationResponse>;
   Float: ResolverTypeWrapper<Scalars['Float']>;
   Int: ResolverTypeWrapper<Scalars['Int']>;
   Item: ResolverTypeWrapper<Item>;
@@ -132,6 +147,7 @@ export type ResolversTypes = ResolversObject<{
 export type ResolversParentTypes = ResolversObject<{
   AddItemMutationResponse: AddItemMutationResponse;
   Boolean: Scalars['Boolean'];
+  DeleteItemMutationResponse: DeleteItemMutationResponse;
   Float: Scalars['Float'];
   Int: Scalars['Int'];
   Item: Item;
@@ -148,7 +164,15 @@ export type AddItemMutationResponseResolvers<ContextType = StoreContext, ParentT
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
+export type DeleteItemMutationResponseResolvers<ContextType = StoreContext, ParentType extends ResolversParentTypes['DeleteItemMutationResponse'] = ResolversParentTypes['DeleteItemMutationResponse']> = ResolversObject<{
+  code?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  item?: Resolver<Maybe<ResolversTypes['Item']>, ParentType, ContextType>;
+  success?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
 export type ItemResolvers<ContextType = StoreContext, ParentType extends ResolversParentTypes['Item'] = ResolversParentTypes['Item']> = ResolversObject<{
+  barcode?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
   id?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   price?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
@@ -158,6 +182,7 @@ export type ItemResolvers<ContextType = StoreContext, ParentType extends Resolve
 
 export type MutationResolvers<ContextType = StoreContext, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = ResolversObject<{
   addItem?: Resolver<Maybe<ResolversTypes['AddItemMutationResponse']>, ParentType, ContextType, Partial<MutationAddItemArgs>>;
+  deleteItemByBarcode?: Resolver<Maybe<ResolversTypes['DeleteItemMutationResponse']>, ParentType, ContextType, Partial<MutationDeleteItemByBarcodeArgs>>;
 }>;
 
 export type QueryResolvers<ContextType = StoreContext, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
@@ -166,6 +191,7 @@ export type QueryResolvers<ContextType = StoreContext, ParentType extends Resolv
 
 export type Resolvers<ContextType = StoreContext> = ResolversObject<{
   AddItemMutationResponse?: AddItemMutationResponseResolvers<ContextType>;
+  DeleteItemMutationResponse?: DeleteItemMutationResponseResolvers<ContextType>;
   Item?: ItemResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;

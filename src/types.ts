@@ -6,6 +6,7 @@ export interface ItemDbObject extends RowDataPacket {
   name: string;
   price: number;
   quantity: number;
+  barcode: number;
 }
 
 export interface Count extends RowDataPacket {

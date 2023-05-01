@@ -7,6 +7,9 @@ const mutations: MutationResolvers = {
     addItem: async (_, { name, price, quantity }, { dataSources }) => {
       return await dataSources.storeAPI.addItem({ name, price, quantity });
     },
+    deleteItemByBarcode: async (_, { barcode }, { dataSources }) => {
+      return await dataSources.storeAPI.deleteItemByBarcode(barcode);
+    },
   },
 };
 
