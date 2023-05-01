@@ -1,15 +1,13 @@
 type Query {
   items: [Item]
-  item(barcode: Int): Item
+  item(barcode: Float): Item
 }
 
 type Item {
-  id: Int
-  barcode: Int!
+  barcode: Float!
   name: String!
   price: Float!
   quantity: Int!
-  barcode: Float!
 }
 
 type AddItemMutationResponse {

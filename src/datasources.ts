@@ -108,10 +108,15 @@ export class StoreDataSource {
     if (await this.getItemByBarcode(barcode)) {
       console.log('item exists');
       await this.addExistingItem({ barcode, quantity });
-    } else {
-      console.log('new item adding');
-      await this.addNewItem({ barcode, name, price, quantity });
+
+      return {
+        code: '200',
+        success: true,
+        message: 'Item modified!',
+      };
     }
+    console.log('new item adding');
+    await this.addNewItem({ barcode, name, price, quantity });
 
     return {
       code: '200',
