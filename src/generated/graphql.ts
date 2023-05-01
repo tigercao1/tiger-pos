@@ -32,7 +32,6 @@ export type DeleteItemMutationResponse = {
 export type Item = {
   __typename?: 'Item';
   barcode: Scalars['Float'];
-  id?: Maybe<Scalars['Int']>;
   name: Scalars['String'];
   price: Scalars['Float'];
   quantity: Scalars['Int'];
@@ -46,6 +45,7 @@ export type Mutation = {
 
 
 export type MutationAddItemArgs = {
+  barcode?: InputMaybe<Scalars['Float']>;
   name?: InputMaybe<Scalars['String']>;
   price?: InputMaybe<Scalars['Float']>;
   quantity?: InputMaybe<Scalars['Int']>;
@@ -58,7 +58,13 @@ export type MutationDeleteItemByBarcodeArgs = {
 
 export type Query = {
   __typename?: 'Query';
+  item?: Maybe<Item>;
   items?: Maybe<Array<Maybe<Item>>>;
+};
+
+
+export type QueryItemArgs = {
+  barcode?: InputMaybe<Scalars['Float']>;
 };
 
 export type WithIndex<TObject> = TObject & Record<string, any>;
@@ -173,7 +179,6 @@ export type DeleteItemMutationResponseResolvers<ContextType = StoreContext, Pare
 
 export type ItemResolvers<ContextType = StoreContext, ParentType extends ResolversParentTypes['Item'] = ResolversParentTypes['Item']> = ResolversObject<{
   barcode?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
-  id?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   price?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
   quantity?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
@@ -186,6 +191,7 @@ export type MutationResolvers<ContextType = StoreContext, ParentType extends Res
 }>;
 
 export type QueryResolvers<ContextType = StoreContext, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
+  item?: Resolver<Maybe<ResolversTypes['Item']>, ParentType, ContextType, Partial<QueryItemArgs>>;
   items?: Resolver<Maybe<Array<Maybe<ResolversTypes['Item']>>>, ParentType, ContextType>;
 }>;
 

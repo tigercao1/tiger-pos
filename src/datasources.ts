@@ -15,19 +15,51 @@ export class StoreDataSource {
     return rows;
   }
 
-  async addItem({
+  async getItemByBarcode(barcode: number): Promise<Item> {
+    const [rows] = await connection.query<ItemDbObject[]>(
+      'SELECT * FROM items WHERE barcode = ?',
+      barcode
+    );
+    console.log('Get item by barcode result:', rows);
+    return rows[0];
+  }
+
+  async addNewItem({
+    barcode,
     name,
     price,
     quantity,
-    barcode,
   }: Item): Promise<AddItemMutationResponse> {
     console.log('adding item');
-    const [rows] = await connection.query(
-      'INSERT INTO items (name, price, quantity) VALUES (?, ?, ?, ?)',
-      [name, price, quantity, barcode]
+    const [rows] = await connection.query<ItemDbObject[]>(
+      'INSERT INTO items (barcode, name, price, quantity) VALUES (?, ?, ?, ?)',
+      [barcode, name, price, quantity]
     );
+    console.log('Add new item', rows);
 
-    console.log('Add data:', rows);
+    return {
+      code: '200',
+      success: true,
+      message: 'New item added!',
+    };
+  }
+
+  async addExistingItem({
+    barcode,
+    quantity,
+  }: {
+    barcode: number;
+    quantity: number;
+  }): Promise<AddItemMutationResponse> {
+    console.log('adding item');
+    const thisItem = await this.getItemByBarcode(barcode);
+    const oldquantity = thisItem.quantity;
+
+    const [rows] = await connection.query<ItemDbObject[]>(
+      'UPDATE items SET quantity = ? WHERE barcode = ?;',
+      [oldquantity + quantity, barcode]
+    );
+    console.log('Add new item', rows);
 
     return {
       code: '200',
@@ -62,6 +94,34 @@ export class StoreDataSource {
       code: '200',
       success: true,
       item: null,
+    };
+  }
+
+  async addItem({
+    barcode,
+    name,
+    price,
+    quantity,
+  }: Item): Promise<AddItemMutationResponse> {
+    console.log('adding item');
+
+    if (await this.getItemByBarcode(barcode)) {
+      console.log('item exists');
+      await this.addExistingItem({ barcode, quantity });
+
+      return {
+        code: '200',
+        success: true,
+        message: 'Item modified!',
+      };
+    }
+    console.log('new item adding');
+    await this.addNewItem({ barcode, name, price, quantity });
+
+    return {
+      code: '200',
+      success: true,
+      message: 'Item added!',
     };
   }
 

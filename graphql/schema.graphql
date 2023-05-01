@@ -1,13 +1,13 @@
 type Query {
   items: [Item]
+  item(barcode: Float): Item
 }
 
 type Item {
-  id: Int
+  barcode: Float!
   name: String!
   price: Float!
   quantity: Int!
-  barcode: Float!
 }
 
 type AddItemMutationResponse {
@@ -24,6 +24,11 @@ type DeleteItemMutationResponse {
 }
 
 type Mutation {
-  addItem(name: String, price: Float, quantity: Int): AddItemMutationResponse
+  addItem(
+    barcode: Float
+    name: String
+    price: Float
+    quantity: Int
+  ): AddItemMutationResponse
   deleteItemByBarcode(barcode: Float): DeleteItemMutationResponse
 }
